@@ -19,6 +19,8 @@ To run all tests ```rspec -f d```.
 
 ## Usage with curl
 
+Note i'm using basic auth here with hardcoded credentials admin:admin just for simplicity.
+
 ### Uploading files
 
 ```
