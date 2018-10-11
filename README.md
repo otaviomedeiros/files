@@ -1,24 +1,32 @@
-# README
+# Upload, organize and search for files with tags
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Running locally
 
-Things you may want to cover:
+After cloning the repository, you should ```cd files/```
 
-* Ruby version
+Make sure you have ruby 2.3.7 running.
 
-* System dependencies
+Install dependencies ```bundle install```.
 
-* Configuration
+Prepare database ```rake db:migrate```.
 
-* Database creation
+Start the server ```bin/rails s```.
 
-* Database initialization
+Now your app is running in localhost on port 3000.
 
-* How to run the test suite
+To run all tests ```rspec -f d```.
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+## Usage with curl
 
-* ...
+### Uploading files
+
+```
+curl -X POST -u admin:admin  -F 'name=Brazil' -F 'tags[]=country' -F 'tags[]=america' -F 'tags[]=south' -F 'tags[]=portuguese' -F 'file=@./file.txt' -v http://localhost:3000/file
+```
+
+### Searching for files
+
+```
+curl -X GET -u admin:admin -v http://localhost:3000/files/+country/1
+```
