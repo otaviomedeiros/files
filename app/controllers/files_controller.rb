@@ -5,7 +5,11 @@ class FilesController < ApplicationController
   http_basic_authenticate_with name: "admin", password: "admin"
 
   def create
-    user_file = UserFile.create!(params.permit(:name))
+    user_file = UserFile.create!(params.permit(:name)) do |uf|
+      tags = params.permit(tags: [])
+      uf.tags << tags[:tags].map{|tag_name| Tag.find_or_create_by(name: tag_name)}
+    end
+
     user_file.file.attach(params[:file])
 
     render json: user_file, status: :ok
