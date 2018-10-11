@@ -1,5 +1,9 @@
 class FilesController < ApplicationController
 
+  include ActionController::HttpAuthentication::Basic::ControllerMethods
+
+  http_basic_authenticate_with name: "admin", password: "admin"
+
   def create
     user_file = UserFile.create!(params.permit(:name))
     user_file.file.attach(params[:file])
