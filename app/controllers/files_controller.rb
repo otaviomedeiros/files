@@ -9,14 +9,13 @@ class FilesController < ApplicationController
   LIMIT = 10
 
   def create
-    user_file = UserFile.create!(params.permit(:name)) do |uf|
-      tags = params.permit(tags: [])
-      uf.tags << tags[:tags].map{|tag_name| Tag.find_or_create_by(name: tag_name)}
+    user_file = UserFile.create_file_with_tags(params.permit(:name, :file, :tags => []))
+
+    if user_file.errors.empty?
+      render json: { url: user_file.file.service_url }
+    else
+      render nothing: true, status: 400
     end
-
-    user_file.file.attach(params[:file])
-
-    render json: { url: user_file.file.service_url }, status: :ok
   end
 
   def search
