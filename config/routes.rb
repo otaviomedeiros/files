@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  resources :files#, only: [:create, :index]
+  post :file, to: 'files#create'
+  get 'files/:tag_search_query/:page', to: 'files#search'
 end
